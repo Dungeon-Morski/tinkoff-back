@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+// DataTables
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import "datatables.net-bs5/css/dataTables.bootstrap5.min.css";
+@import "datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css";
+@import 'datatables.net-select-bs5/css/select.bootstrap5.css';
+
+//fonts
+@font-face {
+    font-family: 'HeadingPro';
+    src: url('../fonts/heading-pro/HeadingPro-Book.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'HeadingProLight';
+    src: url('../fonts/heading-pro/HeadingPro-Light.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'HeadingProRegular';
+    src: url('../fonts/heading-pro/HeadingPro-Regular.ttf');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/Montserrat/Montserrat-Regular.ttf'),
+    url('../fonts/Montserrat/Montserrat-Black.ttf'),
+    url('../fonts/Montserrat/Montserrat-Light.ttf'),
+    url('../fonts/Montserrat/Montserrat-Medium.ttf'),
+    url('../fonts/Montserrat/Montserrat-SemiBold.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+//variables
+$main_yellow: #FFDD2D;
+$main-silver: #B7B7B7;
+$main-blue: #0E51FB;
+$second_silver: #D4D4D4;
+$header_background: #EEE;
+
+
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track {
+    //box-shadow: inset 0 0 6px #6162FDFF;
+}
+
+::-webkit-scrollbar-thumb {
+    //box-shadow: inset 0 0 6px #6162FDFF;
+    border-radius: 10px;
+    height: 5px;
+    width: 5px;
+    //background: $main_yellow;
+
+}
+
+//auth styles
+.auth_container {
+    background: #E4E4E4;
+    min-height: 100vh;
+
+    .auth_card {
+        background: #F8F8F8;
+        max-width: 400px;
+        width: 100%;
+        margin: 0 10px;
+        border-radius: 10px;
+        padding: 35px 34px 20px 34px;
+
+
+        h1 {
+            font-family: HeadingProLight;
+            font-size: 30px;
+            text-align: center;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+
+        form {
+            margin-top: 30px;
+
+            div, input {
+                width: 100%;
+                background: transparent;
+            }
+
+            .fields_wrapper {
+
+                gap: 25px;
+
+                & > div {
+                    position: relative;
+                    display: flex;
+
+                    svg {
+                        position: absolute;
+                        right: 0;
+                        top: 50%;
+                        transform: translateY(-50%);
+
+                        &:hover {
+                            stroke: $main_yellow;
+                        }
+                    }
+
+                    &::before {
+                        content: '';
+                        position: absolute;
+                    }
+
+                    &.name::before, &.surname::before {
+                        content: url("../icons/person.svg");
+                    }
+
+                    &.phone_number::before {
+                        content: url("../icons/phone.svg");
+                    }
+
+                    &.password::before, &.password_confirm::before {
+                        content: url("../icons/lock.svg");
+                    }
+                }
+
+
+            }
+
+            input {
+                padding: 4px 0 8px 35px;
+                border-bottom: 1px solid $second_silver;
+            }
+
+            input[placeholder] {
+                color: $second_silver;
+                font-family: Montserrat;
+                font-size: 15px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+            }
+
+            button {
+                margin-top: 30px;
+                width: 100%;
+                font-family: Montserrat;
+                font-size: 14px;
+                border-radius: 10px;
+                background: $main_yellow;
+                padding: 16px 0;
+                transition: .2s;
+
+                &:hover {
+                    color: white;
+                    transition: .2s;
+                }
+            }
+        }
+
+        .have_account {
+            margin-top: 60px;
+            transition: .2s;
+
+            a {
+                padding-bottom: 5px;
+                border-bottom: 1px dashed $main-silver;
+                color: $main-silver;
+                text-align: center;
+                font-family: Montserrat;
+                font-size: 13px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+            }
+
+            &:hover a {
+                color: $main_yellow;
+                border-bottom: 1px dashed $main_yellow;
+                transition: .2s;
+            }
+        }
+
+
+    }
+}
+
+
+//loader
+
+#loading {
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    position: fixed;
+    display: block;
+    opacity: 0.7;
+    background-color: rgba(0, 0, 0, 1);
+    z-index: 99;
+    text-align: center;
+}
+
+#loading-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+    transform: translate(-50%, -50%);
+}
+
+@import "toastr";
