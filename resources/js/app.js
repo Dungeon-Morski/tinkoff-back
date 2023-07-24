@@ -476,5 +476,5 @@ function modalClose() {
     })
 }
 
-modalClose()
+modalClose();
 
