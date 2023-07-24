@@ -3,7 +3,7 @@
     <div class="container">
         <div class="mt-8">
             <p>Пользователи</p>
-            <table class="table table-bordered" id="table">
+            <table class="table table-bordered usersTable" id="table">
                 <thead>
                 <tr>
                     <th>id</th>
@@ -64,38 +64,13 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="edit-close" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                        <button type="button" id="edit-save" class="btn btn-primary">Сохранить</button>
+                        <button type="button" id="edit-save" class="btn btn-primary user-save">Сохранить</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-
-    <script>
-
-    $(function () {
-
-        table = $('#table').DataTable({
-            "rowId": "id",
-            processing: true,
-            serverSide: true,
-            ajax: '/admin/users/list',
-            columns: [
-
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
-                {data: 'surname', name: 'surname'},
-                {data: 'phone', name: 'phone'},
-                {data: 'login', name: 'login'},
-                {data: 'password', name: 'password'},
-                {data: 'balance', name: 'balance'},
-                {data: 'action', name: 'action'},
-            ]
-        });
-    });
-
-</script>
 
 @endsection
 

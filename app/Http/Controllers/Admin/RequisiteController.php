@@ -39,14 +39,27 @@ class RequisiteController extends Controller
 
     public function updateRequisite(Request $request, UpdateRequisiteAction $action, Requisite $requisite)
     {
+
+
         $data = $request->validate([
             "title" => "string|required",
             "owner" => "string|required",
             "requisites" => "string|required",
             "rate" => "string|required",
-            "status" => "string|boolean",
+            "min_deposit" => "integer|required",
             "bank" => "string|required",
         ]);
+        if ($request->status === "1") {
+            $data['status'] = 1;
+        } else {
+            $data['status'] = 0;
+        }
+
+        if ($request->islink === "true") {
+            $data['islink'] = 1;
+        } else {
+            $data['islink'] = 0;
+        }
 
         return $action($requisite, $data);
 
@@ -60,6 +73,7 @@ class RequisiteController extends Controller
             "owner" => "string|required",
             "requisites" => "string|required",
             "rate" => "string|required",
+            "min_deposit" => "integer|required",
             "bank" => "string|required",
         ]);
 

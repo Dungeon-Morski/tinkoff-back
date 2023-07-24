@@ -32,6 +32,11 @@
                                                placeholder="Введите курс" name="rate">
                                     </div>
                                     <div class="mt-4">
+                                        <label class="form-label" for="category_name">Мин депозит</label>
+                                        <input type="number" class="form-control" id="category_name"
+                                               placeholder="Введите курс" name="min_deposit">
+                                    </div>
+                                    <div class="mt-4">
                                         <label class="form-label" for="category_name">Банк</label>
                                         <input type="text" class="form-control" id="category_name"
                                                placeholder="Введите банк" name="bank">
@@ -70,7 +75,7 @@
             </div>
             <div class="flex-grow-1">
                 <p>Текущие реквезиты</p>
-                <table class="table table-bordered" id="table">
+                <table class="table requisiteTable table-bordered" id="table">
                     <thead>
                     <tr>
                         <th>id</th>
@@ -78,6 +83,8 @@
                         <th>Имя Фамилия</th>
                         <th>Реквезиты</th>
                         <th>Курс</th>
+                        <th>Мин депозит RUB</th>
+
                         <th>Статус</th>
                         <th>Банк</th>
                         <th>Действия</th>
@@ -98,7 +105,7 @@
                     <h4 class="modal-title" id="edit_modal_title">Редактирование</h4>
                     <span id="login_title" style="font-weight: bold"></span>
                 </div>
-                <form method="post" action="">
+                <form method="post" action="" class="updateRequisiteForm">
                     <div class="d-flex justify-content-between m-4 flex-column gap-2">
 
                         <style>
@@ -114,7 +121,7 @@
                             </div>
                             <div class="form-group d-flex flex-column w-100">
                                 <label for="status">Статус</label>
-                                <select name="status" class="status pl-1 rounded py-2 w-100" id="status">
+                                <select name="status" class="status req_status pl-1 rounded py-2 w-100" id="status">
                                     <option name="status" value="1">Включен</option>
                                     <option name="status" value="0">Выключен</option>
                                 </select>
@@ -136,21 +143,32 @@
                             </div>
                         </div>
 
-
                         <div class="form-group">
                             <label for="">Курс</label>
                             <input class="rate py-2 pl-1 rounded w-100" type="text" placeholder="Курс">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Мин депозит</label>
+                            <input class="min_deposit py-2 pl-1 rounded w-100" type="number" placeholder="Мин депозит">
                         </div>
 
                         <div class="form-group">
                             <label for="">Реквезиты</label>
                             <input class="requisites py-2 pl-1 rounded w-100" type="text" placeholder="Реквезиты">
                         </div>
+                        <div class="form-group">
+                            <label for="req_status">Ссылка?</label>
+                            <div class="form-check form-switch mt-2">
+                                <input class="form-check-input link" type="checkbox" id="req_link"
+                                       name="link">
+
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="edit-close" class="btn btn-default" data-dismiss="modal">Закрыть
                         </button>
-                        <button type="button" id="edit-save" class="btn btn-primary">Сохранить</button>
+                        <button type="button" id="edit-save" class="btn btn-primary save-requisite">Сохранить</button>
                     </div>
                 </form>
             </div>
@@ -158,43 +176,6 @@
     </div>
 
 
-    <script>
-
-        $(function () {
-
-            table = $('#table').DataTable({
-                "rowId": "id",
-                processing: true,
-                serverSide: true,
-                ajax: '/admin/requisites/list',
-                columns: [
-
-                    {data: 'id', name: 'id'},
-                    {data: 'title', name: 'title'},
-                    {data: 'owner', name: 'owner'},
-                    {data: 'requisites', name: 'requisites'},
-                    {data: 'rate', name: 'rate'},
-                    {
-
-                        data: 'status', render: function (data, type, row) {
-                            if (data) {
-                                return '<p class="bg-success rounded text-white text-center">Включен</p>'
-                            } else {
-                                return '<p class="bg-danger rounded text-white text-center">Выключен</p>'
-                            }
-                            return 89
-                        },
-
-                        name: 'status'
-                    },
-                    {data: 'bank', name: 'bank'},
-                    {data: 'action', name: 'action'},
-
-                ]
-            });
-        });
-
-    </script>
 
 @endsection
 

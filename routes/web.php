@@ -4,6 +4,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RequisiteController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\WithdrawMethodController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,11 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => ['aut
     Route::get('/admin/requisites/list', [RequisiteController::class, 'getRequisites'])->name('getRequisites');
     Route::post('/admin/requisites/{requisite}', [RequisiteController::class, 'updateRequisite'])->name('getRequisites');
     Route::post('/admin/requisites', [RequisiteController::class, 'createRequisite'])->name('createRequisite');
+
+    Route::get('/admin/withdraw-methods', [WithdrawMethodController::class, 'index'])->name('withdraw_methods');
+    Route::get('/admin/withdraw-methods/list', [WithdrawMethodController::class, 'getWithdrawMethods'])->name('getWithdrawMethods');
+    Route::post('/admin/withdraw-methods/{method}', [WithdrawMethodController::class, 'updateMethod'])->name('getWithdrawMethods');
+    Route::post('/admin/withdraw-methods', [WithdrawMethodController::class, 'createMethod'])->name('createWithdrawMethod');
 
 
 });
