@@ -3,7 +3,9 @@ import $ from 'jquery'
 import 'laravel-datatables-vite';
 import toastr from 'toastr';
 
-
+let row_index;
+let modal = $('.modal');
+let table_row;
 //loader
 window.addEventListener('load', function () {
 
@@ -119,15 +121,15 @@ $('table').on('click', '.user-edit-btn', function () {
 $('table').on('click', '.requisite-edit-btn', function () {
     let index = $(this).attr('data-id');
     let row_data = table.row('#' + index).data();
-    let table_row = table.row('#' + index);
-    let row_index = index;
+
+    table_row = table.row('#' + index);
+    row_index = index;
     let title = row_data.title;
     let owner = row_data.owner;
     let requisites = row_data.requisites;
     let rate = row_data.rate;
     let status = row_data.status;
     let bank = row_data.bank;
-
 
     $('.title').val(title)
     $('.owner').val(owner)
@@ -136,75 +138,136 @@ $('table').on('click', '.requisite-edit-btn', function () {
     $('.status').val(status).change()
     $('.bank').val(bank)
 
-    let modal = $('.modal')
 
     modal.show();
 
-    $('#edit-close').on('click', function () {
-        modal.hide()
-    })
-
-    $('#edit-save').on('click', function () {
-        let new_data = {
-            title: $('.title').val(),
-            owner: $('.owner').val(),
-            requisites: $('.requisites').val(),
-            rate: $('.rate').val(),
-            status: $('.status').val(),
-            bank: $('.bank').val(),
-        }
-        $.ajax({
-            url: "/admin/requisites/" + index,
-            type: "POST",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            dataType: "json",
-            data: new_data,
-            success: function (response, data, row_data) {
-                modal.hide();
-
-                if (response.success) {
-                    let row = table_row;
-
-                    for (let key in new_data) {
-                        if (new_data.hasOwnProperty(key)) {
-                            row.data()[key] = new_data[key];
-                        }
-                    }
-                    row.invalidate('data').draw(false);
-
-
-                    toastr.options = {
-                        "closeButton": true,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": false,
-                        "positionClass": "toast-bottom-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "300",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "800",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    }
-                    Command: toastr["success"](response.message)
-
-
-                } else {
-                    toastr.error(response.message);
-                }
-                $('#edit-save').prop('disabled', false)
-            },
-            error: function (xhr, status, error) {
-                toastr.error('Ошибка соединения с API, попробуйте позже');
-                $('#edit-save').prop('disabled', false)
-            }
-        });
-    })
 
 });
+$('#edit-close').on('click', function () {
+    modal.hide()
+})
+
+$('#edit-save').on('click', function () {
+
+    let new_data = {
+        title: $('.title').val(),
+        owner: $('.owner').val(),
+        requisites: $('.requisites').val(),
+        rate: $('.rate').val(),
+        status: $('.status').val(),
+        bank: $('.bank').val(),
+    }
+    $.ajax({
+        url: "/admin/requisites/" + row_index,
+        type: "POST",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        dataType: "json",
+        data: new_data,
+        success: function (response, data, row_data) {
+            modal.hide();
+
+            if (response.success) {
+                let row = table_row;
+
+                for (let key in new_data) {
+                    if (new_data.hasOwnProperty(key)) {
+                        row.data()[key] = new_data[key];
+                    }
+                }
+                row.invalidate('data').draw(false);
+
+
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-bottom-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "800",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                Command: toastr["success"](response.message)
+
+
+            } else {
+                toastr.error(response.message);
+            }
+            $('#edit-save').prop('disabled', false)
+        },
+        error: function (xhr, status, error) {
+            toastr.error('Ошибка соединения с API, попробуйте позже');
+            $('#edit-save').prop('disabled', false)
+        }
+    });
+})
+
+//create requisite
+$(".createRequisiteForm").submit(function (e) {
+    e.preventDefault();
+    const token = $('meta[name="csrf-token"]').attr('content');
+
+    $.ajax({
+        url: '/admin/requisites',
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: $(this).serialize(),
+        dataType: 'JSON',
+
+        success: function (response, data, row_data) {
+
+            console.log(response)
+            if (response.success) {
+                // let row = table_row;
+                //
+                // for (let key in new_data) {
+                //     if (new_data.hasOwnProperty(key)) {
+                //         row.data()[key] = new_data[key];
+                //     }
+                // }
+                // row.invalidate('data').draw(false);
+
+                $(".createRequisiteForm")[0].reset();
+                ;
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": false,
+                    "positionClass": "toast-bottom-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "800",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                Command: toastr["success"](response.message)
+
+
+            } else {
+                toastr.error(response.message);
+            }
+            $('#edit-save').prop('disabled', false)
+        },
+        error: function (xhr, status, error) {
+            toastr.error('Ошибка соединения с API, попробуйте позже');
+            $('#edit-save').prop('disabled', false)
+        }
+    });
+})

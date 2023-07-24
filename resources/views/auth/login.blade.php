@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 @foreach($errors->all() as $message)
-                    <p>{{$message}}</p>
+                    <p class="text-danger mt-1">{{$message}}</p>
                 @endforeach
                 <button type="submit">Войти</button>
             </form>

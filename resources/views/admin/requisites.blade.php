@@ -3,7 +3,7 @@
     <div class="container">
         <div class="mt-8 flex justify-content-between gap-4">
             <div class="col-12 col-lg-4">
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form class="createRequisiteForm" method="POST" enctype="multipart/form-data">
                     <div class="card">
                         <div class="card-header">
                             <h5 class="card-title mb-0">Добавить новый способ пополнение</h5>
@@ -11,26 +11,45 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="mb-3">
+                                    <div class="">
                                         <label class="form-label" for="category_name">Название</label>
                                         <input type="text" class="form-control" id="category_name"
-                                               placeholder="Введите название" name="req_name">
+                                               placeholder="Введите название" name="title">
+                                    </div>
+                                    <div class="mt-4">
+                                        <label class="form-label" for="category_name">Имя Фамилия</label>
+                                        <input type="text" class="form-control" id="category_name"
+                                               placeholder="Введите фамилию и имя" name="owner">
+                                    </div>
+                                    <div class="mt-4">
+                                        <label class="form-label" for="category_name">Реквезиты</label>
+                                        <input type="text" class="form-control" id="category_name"
+                                               placeholder="Введите реквезиты" name="requisites">
+                                    </div>
+                                    <div class="mt-4">
+                                        <label class="form-label" for="category_name">Курс</label>
+                                        <input type="text" class="form-control" id="category_name"
+                                               placeholder="Введите курс" name="rate">
+                                    </div>
+                                    <div class="mt-4">
+                                        <label class="form-label" for="category_name">Банк</label>
+                                        <input type="text" class="form-control" id="category_name"
+                                               placeholder="Введите банк" name="bank">
                                     </div>
                                     <div class="mt-4">
                                         <label for="req_status">Ссылка?</label>
                                         <div class="form-check form-switch mt-2">
                                             <input class="form-check-input" type="checkbox" id="req_link"
-                                                   name="req_link">
+                                                   name="islink">
 
                                         </div>
                                     </div>
 
-
                                     <div class="mt-4">
                                         <label for="req_status">Cтатус</label>
                                         <div class="form-check form-switch mt-2">
-                                            <input class="form-check-input" type="checkbox" id="req_status" checked=""
-                                                   name="req_status">
+                                            <input class="form-check-input" type="checkbox" id="req_status" checked
+                                                   name="status">
 
                                         </div>
                                     </div>
@@ -155,7 +174,19 @@
                     {data: 'owner', name: 'owner'},
                     {data: 'requisites', name: 'requisites'},
                     {data: 'rate', name: 'rate'},
-                    {data: 'status', name: 'status'},
+                    {
+
+                        data: 'status', render: function (data, type, row) {
+                            if (data) {
+                                return '<p class="bg-success rounded text-white text-center">Включен</p>'
+                            } else {
+                                return '<p class="bg-danger rounded text-white text-center">Выключен</p>'
+                            }
+                            return 89
+                        },
+
+                        name: 'status'
+                    },
                     {data: 'bank', name: 'bank'},
                     {data: 'action', name: 'action'},
 

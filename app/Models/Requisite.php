@@ -9,12 +9,5 @@ class Requisite extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'title',
-        'owner',
-        'rate',
-        'requisites',
-        'status',
-        'bank',
-    ];
+    protected $guarded;
 }

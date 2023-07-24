@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\CreateRequisiteAction;
 use App\Actions\UpdateRequisiteAction;
 use App\DataTables\UsersDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Requisite;
 use Illuminate\Http\Request;
+use Validator;
 use Yajra\DataTables\DataTables;
 
 class RequisiteController extends Controller
@@ -48,5 +50,27 @@ class RequisiteController extends Controller
 
         return $action($requisite, $data);
 
+    }
+
+    public function createRequisite(Request $request, CreateRequisiteAction $action)
+    {
+
+        $data = $request->validate([
+            "title" => "string|required",
+            "owner" => "string|required",
+            "requisites" => "string|required",
+            "rate" => "string|required",
+            "bank" => "string|required",
+        ]);
+
+        if ($request->islink === "on") {
+            $data['islink'] = 1;
+        }
+        if ($request->status === "on") {
+            $data['status'] = 1;
+        }
+
+
+        return $action($data);
     }
 }

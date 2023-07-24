@@ -19,11 +19,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'store'])->name('auth');
+Route::group(['namespace' => 'App\Http\Controllers\Auth'], function () {
 
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'store'])->name('auth');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => ['guest']], function () {
+});
+
+Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => ['auth', 'admin']], function () {
     Route::get('/admin', [DashboardController::class, 'index'])->name('admin');
 
     Route::get('/admin/users', [UserController::class, 'index'])->name('users');
@@ -33,6 +37,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => ['gue
     Route::get('/admin/requisites', [RequisiteController::class, 'index'])->name('requisites');
     Route::get('/admin/requisites/list', [RequisiteController::class, 'getRequisites'])->name('getRequisites');
     Route::post('/admin/requisites/{requisite}', [RequisiteController::class, 'updateRequisite'])->name('getRequisites');
+    Route::post('/admin/requisites', [RequisiteController::class, 'createRequisite'])->name('createRequisite');
 
 
 });
